@@ -14,10 +14,11 @@ oldTime = time.time()
 global app_time
 app_time = 0
 
-signal = np.load("resources/lineHist.npy")
+size = 200
+vf = np.vectorize(lambda x: 10 * np.exp(-((x - size // 2) / (size // 4)) * ((x - size // 2) / (size // 4))))
+signal = vf(np.arange(200)) + 5 * np.random.rand(200) if False else np.load("resources/lineHist.npy")
 dim = signal.shape[0]
 U, s = get_line_laplacian_eigen(dim)
-# signal = np.random.rand(dim)
 
 fig, ax = plt.subplots()
 line, = ax.plot(range(dim), signal, 'r-', linewidth=2)
@@ -32,10 +33,10 @@ def data_gen():
         yield i
 
 
-def get_app_time():
+def get_app_time(tau=None):
     global oldTime
     global app_time
-    dt = time.time() - oldTime
+    dt = tau if tau is not None else time.time() - oldTime
     oldTime = time.time()
     app_time += dt
     return app_time, dt
@@ -46,7 +47,7 @@ def run(i):
     ax.clear()
 
     # get time data
-    t, dt = get_app_time()
+    t, dt = get_app_time(0.5)
     print("n : " + str(i) + " t : " + str(t) + " dt : " + str(dt))
 
     # smoothing signal
@@ -83,7 +84,7 @@ def save_gif(ani):
 if __name__ == "__main__":
     is_video = True
     # time between frames computed by experiment (check dt in logs - average of dt's)
-    time_between_frames = 0.1
+    time_between_frames = 0.5
     time_in_video_seconds = 100
 
     generator = np.math.floor(time_in_video_seconds / time_between_frames) if is_video else data_gen
