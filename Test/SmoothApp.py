@@ -23,7 +23,7 @@ U, s = get_line_laplacian_eigen(dim)
 fig, ax = plt.subplots()
 line, = ax.plot(range(dim), signal, 'r-', linewidth=2)
 ax.set_xlim([0, dim])
-ax.set_ylim([0, 3 * max(signal)])
+ax.set_ylim([0, 2 * np.max(signal)])
 
 
 def data_gen():
@@ -54,7 +54,7 @@ def run(i):
     smoothed_signal = matrix_exp_eigen(U, -s, t, signal)
 
     length = smoothed_signal.shape[0]
-    max_signal = max(smoothed_signal)
+    max_signal = np.max(smoothed_signal)
 
     # set camera
     ax.set_xlim([0, length])
@@ -62,6 +62,7 @@ def run(i):
 
     # draw smoothing function
     ax.plot(range(length), smoothed_signal, 'r-', linewidth=2)
+    ax.plot(range(length), signal)
 
     # draw info
     ax.text(.5, 1.05, "heat time = " + str(t), transform=ax.transAxes, va='center')
@@ -71,7 +72,7 @@ def run(i):
     dim = local.shape[0]
     local_x = np.array(range(dim))
     local_x = local_x[local]
-    ones = np.array([1 for x in range(dim)])
+    ones = np.ones(dim)
     ax.stem(local_x, max_signal * ones[local])
 
 
@@ -82,7 +83,7 @@ def save_gif(ani):
 
 
 if __name__ == "__main__":
-    is_video = True
+    is_video = False
     # time between frames computed by experiment (check dt in logs - average of dt's)
     time_between_frames = 0.5
     time_in_video_seconds = 100

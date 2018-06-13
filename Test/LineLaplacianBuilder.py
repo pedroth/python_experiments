@@ -1,8 +1,4 @@
-import math
-
 import numpy as np
-
-from MatrixExp import matrix_exp_eigen
 
 
 def get_line_laplacian_matrix(n):
@@ -27,18 +23,18 @@ def get_line_laplacian_eigen(n):
     eigen_values = np.zeros([n])
 
     for j in range(1, n + 1):
-        theta = math.pi * (j - 1) / (2 * n)
-        sin = math.sin(theta)
+        theta = np.pi * (j - 1) / (2 * n)
+        sin = np.sin(theta)
         eigen_values[j - 1] = 4 * sin * sin
         if j == 0:
-            sqrt = 1 / math.sqrt(n)
+            sqrt = 1 / np.sqrt(n)
             for i in range(1, n + 1):
                 eigen_vectors[i - 1, j - 1] = sqrt
         else:
             for i in range(1, n + 1):
-                theta = (math.pi * (i - 0.5) * (j - 1)) / n
-                math_sqrt = math.sqrt(2.0 / n)
-                eigen_vectors[i - 1, j - 1] = math_sqrt * math.cos(theta)
+                theta = (np.pi * (i - 0.5) * (j - 1)) / n
+                math_sqrt = np.sqrt(2.0 / n)
+                eigen_vectors[i - 1, j - 1] = math_sqrt * np.cos(theta)
     return eigen_vectors, eigen_values
 
 
