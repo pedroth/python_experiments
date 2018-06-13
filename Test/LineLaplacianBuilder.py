@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def get_line_laplacian_matrix(n):
     assert n > 1
     matrix = np.zeros([n, n])
@@ -37,10 +36,3 @@ def get_line_laplacian_eigen(n):
                 eigen_vectors[i - 1, j - 1] = math_sqrt * np.cos(theta)
     return eigen_vectors, eigen_values
 
-
-if __name__ == "__main__":
-    dim = 10
-    print(get_line_laplacian_matrix(dim))
-    U, s = get_line_laplacian_eigen(dim)
-    signal = np.random.rand(10)
-    matrix_exp_eigen()
