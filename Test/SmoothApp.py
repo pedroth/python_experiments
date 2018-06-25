@@ -16,7 +16,7 @@ app_time = 0
 
 size = 200
 vf = np.vectorize(lambda x: 10 * np.exp(-((x - size // 2) / (size // 4)) * ((x - size // 2) / (size // 4))))
-signal = vf(np.arange(200)) + 5 * np.random.rand(200) if False else np.load("resources/lineHist.npy")
+signal = vf(np.arange(200)) + 5 * np.random.rand(200) if True else np.load("resources/lineHist.npy")
 dim = signal.shape[0]
 U, s = get_line_laplacian_eigen(dim)
 
@@ -61,8 +61,8 @@ def run(i):
     ax.set_ylim([0, 2 * max_signal])
 
     # draw smoothing function
-    ax.plot(range(length), smoothed_signal, 'r-', linewidth=2)
     ax.plot(range(length), signal)
+    ax.plot(range(length), smoothed_signal, 'r-', linewidth=2)
 
     # draw info
     ax.text(.5, 1.05, "heat time = " + str(t), transform=ax.transAxes, va='center')
@@ -83,7 +83,7 @@ def save_gif(ani):
 
 
 if __name__ == "__main__":
-    is_video = False
+    is_video = True
     # time between frames computed by experiment (check dt in logs - average of dt's)
     time_between_frames = 0.5
     time_in_video_seconds = 100

@@ -23,19 +23,19 @@ def get_line_laplacian_eigen(n):
     eigen_vectors = np.zeros([n, n])
     eigen_values = np.zeros([n])
 
-    for j in range(1, n + 1):
-        theta = np.pi * (j - 1) / (2 * n)
+    for j in range(0, n):
+        theta = np.pi * j / (2 * n)
         sin = np.sin(theta)
-        eigen_values[j - 1] = 4 * sin * sin
+        eigen_values[j] = 4 * sin * sin
         if j == 0:
             sqrt = 1 / np.sqrt(n)
-            for i in range(1, n + 1):
-                eigen_vectors[i - 1, j - 1] = sqrt
+            for i in range(0, n):
+                eigen_vectors[i, j] = sqrt
         else:
-            for i in range(1, n + 1):
-                theta = (np.pi * (i - 0.5) * (j - 1)) / n
+            for i in range(0, n):
+                theta = (np.pi * i * j) / n
                 math_sqrt = np.sqrt(2.0 / n)
-                eigen_vectors[i - 1, j - 1] = math_sqrt * np.cos(theta)
+                eigen_vectors[i, j] = math_sqrt * np.cos(theta)
     return eigen_vectors, eigen_values
 
 def smooth(t, signal):
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     signal = pd.read_csv('resources/test_data.txt', sep='\t', header=None).values[0:1010, 3]
 
     # smoothing parameter
-    t = 10
+    t = 100
     # Signal smoothing
     smoothed_signal = smooth(t, signal)
     # find local maximum minimum indexes
